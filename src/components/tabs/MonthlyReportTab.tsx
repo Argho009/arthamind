@@ -3,7 +3,7 @@ import {
   FileText, TrendingUp, CheckCircle, Download, 
   Sparkles, Award, Shield, PieChart, ArrowUpRight 
 } from 'lucide-react';
-import { MonthlyReviewReport } from '../../types';
+import { MonthlyReviewReport } from '../../lib/types';
 
 interface MonthlyReportTabProps {
   report: MonthlyReviewReport;
@@ -86,7 +86,7 @@ export const MonthlyReportTab: React.FC<MonthlyReportTabProps> = ({ report }) =>
           </h3>
 
           <div className="space-y-3.5">
-            {report.topCategories.map((item, idx) => (
+            {report.topCategories.map((item: { category: string; amount: number; percentage: number }, idx: number) => (
               <div key={idx} className="space-y-1">
                 <div className="flex justify-between text-xs">
                   <span className="font-semibold text-white">{item.category}</span>
@@ -110,7 +110,7 @@ export const MonthlyReportTab: React.FC<MonthlyReportTabProps> = ({ report }) =>
           <div>
             <h3 className="text-sm font-bold text-white mb-3">Living Model Log & Key Insights</h3>
             <div className="space-y-2.5">
-              {report.lifeEventsSummary.map((msg, idx) => (
+              {report.lifeEventsSummary.map((msg: string, idx: number) => (
                 <div key={idx} className="p-3 rounded-xl bg-slate-850 border border-slate-800/80 flex items-start space-x-2.5 text-xs text-slate-300">
                   <CheckCircle className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                   <span>{msg}</span>

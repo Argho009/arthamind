@@ -3,7 +3,7 @@ import {
   Upload, FileText, MessageSquare, Mic, Check, 
   ArrowRight, ShieldCheck, Sparkles, Filter, Plus 
 } from 'lucide-react';
-import { Transaction, ScopedRule } from '../../types';
+import { Transaction, ScopedRule } from '../../lib/types';
 
 interface IngestionReviewTabProps {
   transactions: Transaction[];

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ShieldCheck, ShieldAlert, AlertOctagon, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
-import { GuardrailCheckResult } from '../../types';
+import { GuardrailCheckResult } from '../../lib/types';
 import { evaluateSEBIGuardrails } from '../../lib/guardrails/sebiGuardrails';
 
 export const GuardrailsLabTab: React.FC = () => {

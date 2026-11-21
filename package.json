@@ -11,6 +11,9 @@
     "d1:seed": "wrangler d1 execute arthamind-db --local --file=./migrations/0002_seed_demo_data.sql",
     "deploy": "npm run build && wrangler pages deploy dist --project-name=arthamind"
   },
+  "overrides": {
+    "rollup": "npm:@rollup/wasm-node"
+  },
   "dependencies": {
     "clsx": "^2.1.1",
     "hono": "^4.7.2",
@@ -20,6 +23,7 @@
     "tailwind-merge": "^3.0.2"
   },
   "devDependencies": {
+    "@rollup/wasm-node": "^4.68.8",
     "@types/node": "^22.13.4",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

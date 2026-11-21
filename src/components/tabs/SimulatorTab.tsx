@@ -3,7 +3,7 @@ import {
   Calculator, Sparkles, ArrowRight, Calendar, 
   TrendingUp, Shield, Clock, HelpCircle, CheckCircle2 
 } from 'lucide-react';
-import { LivingProfile, Goal, WhatIfScenarioInput, WhatIfSimulationResult } from '../../types';
+import { LivingProfile, Goal, WhatIfScenarioInput, WhatIfSimulationResult } from '../../lib/types';
 import { runWhatIfSimulation } from '../../lib/simulator/deterministicEngine';
 
 interface SimulatorTabProps {
@@ -229,7 +229,7 @@ export const SimulatorTab: React.FC<SimulatorTabProps> = ({
         </h3>
 
         <div className="space-y-3">
-          {simulationResult.impactOnGoals.map((g, idx) => (
+          {simulationResult.impactOnGoals.map((g: { goalTitle: string; originalTargetDate: string; newTargetDate: string; monthsSavedOrDelayed: number }, idx: number) => (
             <div key={idx} className="p-4 rounded-xl bg-slate-850 border border-slate-800 flex items-center justify-between">
               <div>
                 <h4 className="text-sm font-semibold text-white">{g.goalTitle}</h4>

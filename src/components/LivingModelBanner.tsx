@@ -1,6 +1,6 @@
 import React from 'react';
 import { AlertCircle, Check, X, ArrowRight, Zap } from 'lucide-react';
-import { LifeEvent } from '../types';
+import { LifeEvent } from '../lib/types';
 
 interface LivingModelBannerProps {
   events: LifeEvent[];

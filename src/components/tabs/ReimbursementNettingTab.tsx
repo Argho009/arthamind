@@ -1,6 +1,6 @@
 import React from 'react';
 import { Users, ArrowRight, ShieldCheck, CheckCircle2, Split, AlertCircle } from 'lucide-react';
-import { Transaction } from '../../types';
+import { Transaction } from '../../lib/types';
 
 interface ReimbursementNettingTabProps {
   transactions: Transaction[];

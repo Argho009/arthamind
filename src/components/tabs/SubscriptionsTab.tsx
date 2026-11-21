@@ -3,7 +3,7 @@ import {
   CreditCard, AlertTriangle, Check, X, Bell, 
   Calendar, Layers, ShieldCheck, Sparkles 
 } from 'lucide-react';
-import { Subscription, SinkingFund } from '../../types';
+import { Subscription, SinkingFund } from '../../lib/types';
 
 interface SubscriptionsTabProps {
   subscriptions: Subscription[];

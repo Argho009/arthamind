@@ -3,7 +3,7 @@ import {
   TrendingUp, Shield, Wallet, ArrowUpRight, ArrowDownLeft, 
   Calendar, CheckCircle2, Clock, Sparkles, AlertTriangle 
 } from 'lucide-react';
-import { LivingProfile, Transaction, Goal } from '../../types';
+import { LivingProfile, Transaction, Goal } from '../../lib/types';
 
 interface DashboardTabProps {
   profile: LivingProfile;
