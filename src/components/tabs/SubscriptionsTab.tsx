@@ -14,60 +14,69 @@ export const SubscriptionsTab: React.FC<SubscriptionsTabProps> = ({
 }) => {
   return (
     <div className="space-y-6">
-      {/* Subscriptions */}
-      <div className="p-5 rounded-xl bg-slate-900/60 border border-slate-800">
+      {/* Active Recurring Commitments */}
+      <section 
+        aria-labelledby="subs-heading"
+        className="p-6 rounded-xl bg-[#0e1420] border border-[#1a2333]"
+      >
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-sm font-semibold text-slate-200">Recurring subscriptions</h2>
-            <p className="text-xs text-slate-400 mt-0.5">Upcoming auto-debits and price adjustments.</p>
+            <span className="text-xs font-semibold uppercase tracking-[0.08em] text-[#8b949e]">
+              Recurring Ledger
+            </span>
+            <h2 id="subs-heading" className="text-base font-semibold text-[#f0f6fc] mt-0.5">
+              Active Subscriptions & Auto-Debits
+            </h2>
           </div>
-          <span className="text-xs text-slate-500 font-mono">{subscriptions.length} active</span>
+          <span className="text-xs text-[#626c79] font-mono tabular-nums">{subscriptions.length} Tracked</span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs">
           {subscriptions.map((sub) => (
             <div 
               key={sub.id} 
-              className="p-3.5 rounded-lg bg-slate-850/50 border border-slate-800 flex flex-col justify-between"
+              className="p-4 rounded-lg bg-[#141d2e] border border-[#232f44] flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-slate-200">{sub.name}</span>
-                  <span className="font-mono font-medium text-slate-200">
+                  <span className="font-semibold text-[#f0f6fc]">{sub.name}</span>
+                  <span className="font-mono font-semibold text-[#f0f6fc] tabular-nums">
                     ₹{sub.amount.toLocaleString('en-IN')}/mo
                   </span>
                 </div>
 
                 {sub.priceChangeDetected && (
-                  <div className="mt-2 text-[11px] text-amber-400">
+                  <div className="mt-2 text-[11px] text-amber-400 font-medium">
                     Price increased from ₹{sub.previousAmount} (+₹{(sub.amount - (sub.previousAmount || 0))})
                   </div>
                 )}
 
-                <div className="mt-2 text-[11px] text-slate-500 font-mono">
-                  Renews: {sub.nextRenewalDate}
+                <div className="mt-2.5 text-[11px] text-[#626c79] font-mono tabular-nums">
+                  Renewal: {sub.nextRenewalDate}
                 </div>
               </div>
 
-              <div className="mt-3 pt-2.5 border-t border-slate-800/60 flex items-center justify-between">
-                <span className="text-[10px] text-slate-400">Keep active?</span>
+              <div className="mt-4 pt-3 border-t border-[#1a2333] flex items-center justify-between">
+                <span className="text-[11px] text-[#8b949e]">Status:</span>
                 <div className="flex items-center space-x-1">
                   <button
+                    type="button"
                     onClick={() => onConfirmUsage(sub.id, true)}
-                    className={`px-2 py-0.5 rounded text-[10px] transition-colors ${
+                    className={`min-h-[32px] px-2.5 py-1 rounded text-[11px] font-medium transition-colors ${
                       sub.userUsageConfirmed 
-                        ? 'bg-slate-700 text-white font-medium' 
-                        : 'text-slate-500 hover:text-slate-300'
+                        ? 'bg-[#1a263c] text-[#f0f6fc] border border-[#232f44]' 
+                        : 'text-[#626c79] hover:text-[#f0f6fc]'
                     }`}
                   >
-                    Keep
+                    Active
                   </button>
                   <button
+                    type="button"
                     onClick={() => onConfirmUsage(sub.id, false)}
-                    className={`px-2 py-0.5 rounded text-[10px] transition-colors ${
+                    className={`min-h-[32px] px-2.5 py-1 rounded text-[11px] font-medium transition-colors ${
                       !sub.userUsageConfirmed 
-                        ? 'bg-slate-700 text-white font-medium' 
-                        : 'text-slate-500 hover:text-slate-300'
+                        ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' 
+                        : 'text-[#626c79] hover:text-[#f0f6fc]'
                     }`}
                   >
                     Cancel
@@ -77,45 +86,57 @@ export const SubscriptionsTab: React.FC<SubscriptionsTabProps> = ({
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
-      {/* Sinking Funds */}
-      <div className="p-5 rounded-xl bg-slate-900/60 border border-slate-800">
+      {/* Sinking Funds (Seasonal Spikes) */}
+      <section 
+        aria-labelledby="sinking-heading"
+        className="p-6 rounded-xl bg-[#0e1420] border border-[#1a2333]"
+      >
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h2 className="text-sm font-semibold text-slate-200">Sinking funds (Periodic expenses)</h2>
-            <p className="text-xs text-slate-400 mt-0.5">Spreads annual and seasonal costs into monthly reserves.</p>
+            <span className="text-xs font-semibold uppercase tracking-[0.08em] text-[#8b949e]">
+              Proactive Reserves
+            </span>
+            <h2 id="sinking-heading" className="text-base font-semibold text-[#f0f6fc] mt-0.5">
+              Sinking Funds (Periodic & Annual Expenses)
+            </h2>
+            <p className="text-xs text-[#8b949e] mt-1">
+              Spreads lumpy costs (Diwali, car insurance, annual fees) into predictable monthly reserves.
+            </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
           {sinkingFunds.map((fund) => {
             const pct = Math.min(100, Math.round((fund.currentSaved / fund.targetAmount) * 100));
             return (
-              <div key={fund.id} className="p-3.5 rounded-lg bg-slate-850/50 border border-slate-800">
+              <div key={fund.id} className="p-4 rounded-lg bg-[#141d2e] border border-[#232f44]">
                 <div className="flex items-center justify-between">
-                  <span className="font-medium text-slate-200">{fund.name}</span>
-                  <span className="text-slate-400 text-[11px]">Due month {fund.dueMonth}</span>
+                  <span className="font-semibold text-[#f0f6fc]">{fund.name}</span>
+                  <span className="text-[#8b949e] font-mono">Due Month {fund.dueMonth}</span>
                 </div>
 
-                <div className="flex justify-between text-[11px] text-slate-400 mt-2 font-mono">
+                <div className="flex justify-between text-[11px] text-[#8b949e] mt-3 font-mono tabular-nums">
                   <span>Saved: ₹{fund.currentSaved.toLocaleString('en-IN')}</span>
                   <span>Target: ₹{fund.targetAmount.toLocaleString('en-IN')}</span>
                 </div>
 
-                <div className="w-full bg-slate-800 rounded-full h-1.5 mt-2">
-                  <div className="bg-slate-400 h-1.5 rounded-full" style={{ width: `${pct}%` }} />
+                <div className="w-full bg-[#0e1420] rounded-full h-1.5 mt-2 overflow-hidden">
+                  <div className="bg-[#2ea043] h-1.5 rounded-full" style={{ width: `${pct}%` }} />
                 </div>
 
-                <div className="mt-2.5 pt-2 border-t border-slate-800/60 flex items-center justify-between text-[11px]">
-                  <span className="text-slate-500">Monthly reserve</span>
-                  <span className="font-mono text-slate-300">₹{fund.monthlyAllocation.toLocaleString('en-IN')}/mo</span>
+                <div className="mt-3 pt-2.5 border-t border-[#1a2333] flex items-center justify-between text-[11px]">
+                  <span className="text-[#626c79]">Monthly Reserve Allocation</span>
+                  <span className="font-mono font-medium text-[#f0f6fc] tabular-nums">
+                    ₹{fund.monthlyAllocation.toLocaleString('en-IN')}/mo
+                  </span>
                 </div>
               </div>
             );
           })}
         </div>
-      </div>
+      </section>
     </div>
   );
 };

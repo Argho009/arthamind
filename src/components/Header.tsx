@@ -1,5 +1,5 @@
 import React from 'react';
-import { Landmark, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { Landmark } from 'lucide-react';
 
 interface HeaderProps {
   safeToSpendDaily: number;
@@ -29,59 +29,67 @@ export const Header: React.FC<HeaderProps> = ({
   ];
 
   return (
-    <header className="border-b border-slate-800/80 bg-[#0b0f17]/95 sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-14">
+    <header className="border-b border-[#1a2333] bg-[#090d14]/90 backdrop-blur-md sticky top-0 z-50">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+        <div className="flex items-center justify-between h-16">
           {/* Logo & Product Name */}
-          <div 
-            className="flex items-center space-x-2.5 cursor-pointer" 
+          <button 
+            type="button"
+            className="flex items-center space-x-3 text-left focus-visible:ring-2 focus-visible:ring-emerald-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#090d14] rounded-lg p-1 -ml-1 transition-transform active:scale-[0.98]" 
             onClick={() => setActiveTab('dashboard')}
           >
-            <div className="w-7 h-7 rounded-lg bg-slate-800 border border-slate-700/80 flex items-center justify-center text-slate-200">
-              <Landmark className="w-4 h-4" />
+            <div className="w-8 h-8 rounded-lg bg-[#0e1420] border border-[#1a2333] flex items-center justify-center text-[#f0f6fc]">
+              <Landmark className="w-4 h-4 stroke-[1.5]" />
             </div>
-            <div className="flex items-center space-x-2">
-              <span className="font-semibold text-sm tracking-tight text-white">ArthaMind</span>
-              <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">/ finance</span>
+            <div>
+              <div className="flex items-center space-x-1.5">
+                <span className="font-bold text-sm tracking-tight text-[#f0f6fc]">ArthaMind</span>
+                <span className="text-[10px] tracking-[0.08em] uppercase text-[#626c79] font-mono">Ledger</span>
+              </div>
             </div>
-          </div>
+          </button>
 
-          {/* Calm Financial Indicators */}
-          <div className="flex items-center space-x-5 text-xs">
+          {/* Key Datum Indicators */}
+          <div className="flex items-center space-x-6 text-xs">
             <div className="hidden sm:flex items-center space-x-2">
-              <span className="text-slate-400">Daily allowance:</span>
-              <span className="font-medium text-slate-200 font-mono">₹{safeToSpendDaily.toLocaleString('en-IN')}</span>
+              <span className="text-[#8b949e]">Safe Daily:</span>
+              <span className="font-semibold text-[#f0f6fc] font-mono tabular-nums">
+                ₹{safeToSpendDaily.toLocaleString('en-IN')}
+              </span>
             </div>
             <div className="hidden sm:flex items-center space-x-2">
-              <span className="text-slate-400">Buffer:</span>
-              <span className="font-medium text-slate-200 font-mono">{runwayDays} days</span>
+              <span className="text-[#8b949e]">Runway:</span>
+              <span className="font-semibold text-[#f0f6fc] font-mono tabular-nums">
+                {runwayDays} days
+              </span>
             </div>
-            <div className="flex items-center space-x-2 pl-3 border-l border-slate-800">
-              <div className="w-6 h-6 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-[10px] font-medium text-slate-300">
+            <div className="flex items-center space-x-2.5 pl-4 border-l border-[#1a2333]">
+              <div className="w-7 h-7 rounded-full bg-[#141d2e] border border-[#232f44] flex items-center justify-center text-[11px] font-semibold text-[#f0f6fc]">
                 AD
               </div>
-              <span className="text-slate-300 font-medium hidden md:inline">Argho</span>
+              <span className="text-[#8b949e] font-medium hidden md:inline">Argho Deep</span>
             </div>
           </div>
         </div>
 
-        {/* Tab Navigation */}
-        <div className="flex space-x-1 overflow-x-auto py-1.5 scrollbar-none border-t border-slate-800/50">
+        {/* Tab Navigation with 44px min touch target */}
+        <nav className="flex space-x-1 overflow-x-auto py-1.5 scrollbar-none border-t border-[#1a2333]/60 -mx-1 px-1" aria-label="Tabs">
           {navTabs.map((tab) => {
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
+                type="button"
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative px-3 py-1.5 rounded-md text-xs font-medium whitespace-nowrap transition-colors flex items-center space-x-1.5 ${
+                className={`relative min-h-[44px] px-3.5 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-transform duration-150 ease-taste active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-emerald-500/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#090d14] flex items-center space-x-2 ${
                   isActive
-                    ? 'bg-slate-800 text-white'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-850/50'
+                    ? 'bg-[#141d2e] text-[#f0f6fc] border border-[#232f44] shadow-sm'
+                    : 'text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#0e1420]'
                 }`}
               >
                 <span>{tab.label}</span>
                 {tab.badge && (
-                  <span className="px-1.5 py-0.2 rounded text-[10px] bg-slate-700 text-slate-200 font-medium">
+                  <span className="px-1.5 py-0.5 rounded text-[10px] bg-[#232f44] text-[#f0f6fc] font-mono tabular-nums">
                     {tab.badge}
                   </span>
                 )}
@@ -91,7 +99,7 @@ export const Header: React.FC<HeaderProps> = ({
               </button>
             );
           })}
-        </div>
+        </nav>
       </div>
     </header>
   );

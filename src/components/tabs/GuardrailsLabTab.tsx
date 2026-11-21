@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ShieldCheck } from 'lucide-react';
 import { GuardrailCheckResult } from '../../lib/types';
 import { evaluateSEBIGuardrails } from '../../lib/guardrails/sebiGuardrails';
 
@@ -35,85 +36,102 @@ export const GuardrailsLabTab: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Intro */}
-      <div className="p-5 rounded-xl bg-slate-900/60 border border-slate-800">
-        <h2 className="text-sm font-semibold text-slate-200">
-          Advisory boundaries & compliance
+      {/* Intro Header */}
+      <section 
+        aria-labelledby="guard-heading"
+        className="p-6 rounded-xl bg-[#0e1420] border border-[#1a2333]"
+      >
+        <div className="flex items-center space-x-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#8b949e] mb-1">
+          <ShieldCheck className="w-3.5 h-3.5 stroke-[1.5]" />
+          <span id="guard-heading">Advisory Boundaries & Compliance</span>
+        </div>
+        <h2 className="text-base font-semibold text-[#f0f6fc] mt-1">
+          SEBI-Compliant Financial Coaching Rules
         </h2>
-        <p className="text-xs text-slate-400 mt-1 max-w-2xl">
-          Coaching is strictly educational. Guidance is limited to asset allocation, cash flow planning, and timeline modeling. Recommendations for specific securities, trading calls, or guaranteed returns are intercepted.
+        <p className="text-xs text-[#8b949e] mt-1 max-w-2xl leading-relaxed">
+          Guidance is strictly educational. The coach models scenarios, emergency buffers, and compounding without issuing buy/sell ratings on individual stocks or promising guaranteed yields.
         </p>
-      </div>
+      </section>
 
-      {/* Interactive Checker */}
-      <div className="p-5 rounded-xl bg-slate-900/60 border border-slate-800">
-        <h3 className="text-xs font-semibold text-slate-300 mb-2">Test advisory prompt:</h3>
+      {/* Interactive Compliance Evaluator */}
+      <section 
+        aria-labelledby="tester-heading"
+        className="p-6 rounded-xl bg-[#0e1420] border border-[#1a2333]"
+      >
+        <h3 id="tester-heading" className="text-xs font-semibold uppercase tracking-[0.08em] text-[#8b949e] mb-3">
+          Interactive Prompt Evaluator
+        </h3>
         
         <div className="flex gap-2">
           <input
             type="text"
             value={testQuery}
             onChange={(e) => setTestQuery(e.target.value)}
-            className="flex-1 bg-[#080c14] border border-slate-800 rounded-lg px-3.5 py-2 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-slate-700"
+            className="flex-1 min-h-[44px] bg-[#090d14] border border-[#1a2333] rounded-lg px-4 py-2 text-xs text-[#f0f6fc] placeholder:text-[#626c79] focus:outline-none focus:border-[#2ea043] focus:ring-1 focus:ring-[#2ea043] font-mono"
           />
           <button
+            type="button"
             onClick={() => handleRunEvaluation(testQuery)}
-            className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs border border-slate-700 transition-colors"
+            className="min-h-[44px] px-5 py-2 rounded-lg bg-[#141d2e] hover:bg-[#1a263c] text-[#f0f6fc] font-medium text-xs border border-[#232f44] transition-transform duration-150 ease-taste active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-emerald-500/70"
           >
-            Check
+            Verify
           </button>
         </div>
 
-        {/* Benchmarks */}
-        <div className="mt-3.5 pt-3 border-t border-slate-800/60">
-          <div className="text-[11px] text-slate-500 mb-1.5">Sample scenarios:</div>
+        {/* Benchmarks Grid */}
+        <div className="mt-4 pt-3.5 border-t border-[#1a2333]">
+          <div className="text-[11px] text-[#626c79] mb-2">Test benchmarks:</div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
             {benchmarks.map((tc, idx) => (
               <button
                 key={idx}
+                type="button"
                 onClick={() => handleRunEvaluation(tc.query)}
-                className="text-left p-2.5 rounded-lg bg-slate-850/50 hover:bg-slate-850 border border-slate-800 text-slate-300 transition-colors"
+                className="text-left p-3 rounded-lg bg-[#141d2e] hover:bg-[#1a263c] border border-[#232f44] text-[#8b949e] hover:text-[#f0f6fc] transition-transform duration-150 ease-taste active:scale-[0.98]"
               >
-                <div className="font-medium text-slate-200">{tc.label}</div>
-                <div className="text-[11px] text-slate-500 truncate mt-0.5 font-mono">"{tc.query}"</div>
+                <div className="font-semibold text-[#f0f6fc]">{tc.label}</div>
+                <div className="text-[11px] text-[#626c79] truncate mt-1 font-mono">"{tc.query}"</div>
               </button>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Evaluation Results */}
-      <div className="p-5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs">
-        <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+      {/* Evaluation Results Card */}
+      <section 
+        aria-labelledby="result-heading"
+        className="p-6 rounded-xl bg-[#0e1420] border border-[#1a2333] text-xs"
+      >
+        <div className="flex items-center justify-between pb-3.5 border-b border-[#1a2333]">
           <div className="flex items-center space-x-2">
-            <span className={`w-2 h-2 rounded-full ${evalResult.isCompliant ? 'bg-emerald-400' : 'bg-rose-400'}`} />
-            <span className="font-semibold text-slate-200 font-mono">
-              Status: {evalResult.action}
+            <span className={`w-2 h-2 rounded-full ${evalResult.isCompliant ? 'bg-[#2ea043]' : 'bg-rose-400'}`} />
+            <span id="result-heading" className="font-semibold text-[#f0f6fc] font-mono">
+              Action: {evalResult.action}
             </span>
           </div>
-          <span className="text-[11px] text-slate-500">SEBI Guidelines Aligned</span>
+          <span className="text-[11px] font-mono text-[#8b949e]">SEBI RA Guidelines</span>
         </div>
 
-        <div className="mt-3.5 space-y-3">
+        <div className="mt-4 space-y-3">
           {!evalResult.isCompliant && (
-            <div className="p-3 rounded-lg bg-slate-850/80 border border-slate-800 text-slate-400">
-              <span className="font-medium text-slate-200">Notice: </span>
+            <div className="p-3.5 rounded-lg bg-[#141d2e] border border-rose-500/20 text-[#8b949e] leading-relaxed">
+              <span className="font-semibold text-rose-400">Compliance Restriction: </span>
               {evalResult.reason}
             </div>
           )}
 
-          <div className="p-3.5 rounded-lg bg-slate-850/50 border border-slate-800">
-            <div className="text-[11px] text-slate-400 mb-1">
-              {evalResult.isCompliant ? 'Permitted coach response:' : 'Educational alternative:'}
+          <div className="p-4 rounded-lg bg-[#141d2e] border border-[#232f44]">
+            <div className="text-[11px] text-[#8b949e] font-semibold mb-1">
+              {evalResult.isCompliant ? 'Permitted Educational Response:' : 'Educational Alternative:'}
             </div>
-            <p className="text-slate-300 leading-relaxed">
+            <p className="text-[#f0f6fc] leading-relaxed">
               {evalResult.isCompliant 
                 ? 'Your query is educational and focused on portfolio allocation. ArthaMind will model asset allocation, tax efficiency, and compounding runway without recommending individual stocks.'
                 : evalResult.educationalAlternative}
             </p>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

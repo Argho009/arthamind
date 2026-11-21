@@ -143,7 +143,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0f17] flex flex-col text-slate-200">
+    <div className="min-h-screen bg-[#090d14] flex flex-col text-[#f0f6fc]">
       <Header
         safeToSpendDaily={profile.safeToSpendDaily || 1616}
         runwayDays={profile.runwayDays || 40}
@@ -158,7 +158,7 @@ export default function App() {
         onResolve={handleResolveLifeEvent}
       />
 
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6">
+      <main className="flex-1 max-w-[1240px] w-full mx-auto px-4 sm:px-6 py-8">
         {activeTab === 'dashboard' && (
           <DashboardTab
             profile={profile}
@@ -211,16 +211,20 @@ export default function App() {
         )}
       </main>
 
-      <footer className="border-t border-slate-800/60 bg-[#0b0f17] py-4 mt-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between text-xs text-slate-500">
-          <div>ArthaMind • Personal Finance</div>
+      <footer className="border-t border-[#1a2333] bg-[#090d14] py-6 mt-12">
+        <div className="max-w-[1240px] mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#626c79]">
+          <div className="flex items-center space-x-2">
+            <span className="font-semibold text-[#8b949e]">ArthaMind</span>
+            <span>•</span>
+            <span>Architectural Financial Ledger</span>
+          </div>
           <a 
             href="https://github.com/Argho009/arthamind" 
             target="_blank" 
             rel="noreferrer" 
-            className="flex items-center space-x-1.5 text-slate-400 hover:text-slate-300 transition-colors font-mono"
+            className="min-h-[44px] flex items-center space-x-2 text-[#8b949e] hover:text-[#f0f6fc] transition-colors font-mono"
           >
-            <Github className="w-3.5 h-3.5" />
+            <Github className="w-4 h-4 stroke-[1.5]" />
             <span>Argho009/arthamind</span>
           </a>
         </div>
