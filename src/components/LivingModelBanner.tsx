@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertCircle, Check, X, ArrowRight, Zap } from 'lucide-react';
+import { ArrowUpRight, Check, X } from 'lucide-react';
 import { LifeEvent } from '../lib/types';
 
 interface LivingModelBannerProps {
@@ -14,41 +14,28 @@ export const LivingModelBanner: React.FC<LivingModelBannerProps> = ({ events, on
   const currentEvent = pendingEvents[0];
 
   return (
-    <div className="bg-gradient-to-r from-amber-950/70 via-slate-900 to-amber-950/70 border-b border-amber-500/40 px-4 py-3 sm:px-6">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-        <div className="flex items-start space-x-3">
-          <div className="p-2 rounded-lg bg-amber-500/20 text-amber-400 mt-0.5">
-            <Zap className="w-5 h-5 animate-pulse" />
-          </div>
+    <div className="border-b border-slate-800 bg-[#0e1420] px-4 py-3">
+      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+        <div className="flex items-center space-x-3">
+          <span className="w-2 h-2 rounded-full bg-amber-400 flex-shrink-0" />
           <div>
-            <div className="flex items-center space-x-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">
-                Living Money Model: Autonomous Event Detected
-              </span>
-            </div>
-            <p className="text-sm font-semibold text-white mt-0.5">
-              {currentEvent.description}
-            </p>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Detected from recent transaction trends. Would you like ArthaMind to update your baseline fixed costs and recalibrate your emergency fund?
-            </p>
+            <span className="font-semibold text-slate-200">Recurring change detected: </span>
+            <span className="text-slate-300">{currentEvent.description}</span>
           </div>
         </div>
 
-        <div className="flex items-center space-x-2 self-end md:self-center">
+        <div className="flex items-center space-x-2 self-end sm:self-auto">
           <button
             onClick={() => onResolve(currentEvent.id, true)}
-            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold shadow-md transition-all"
+            className="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition-colors"
           >
-            <Check className="w-4 h-4" />
-            <span>Accept & Update Profile</span>
+            Update baseline
           </button>
           <button
             onClick={() => onResolve(currentEvent.id, false)}
-            className="flex items-center space-x-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition-all"
+            className="px-2 py-1 rounded text-slate-400 hover:text-slate-300 text-xs transition-colors"
           >
-            <X className="w-4 h-4" />
-            <span>Dismiss</span>
+            Dismiss
           </button>
         </div>
       </div>

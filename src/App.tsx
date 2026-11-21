@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Header } from './components/Header';
 import { LivingModelBanner } from './components/LivingModelBanner';
 import { DashboardTab } from './components/tabs/DashboardTab';
@@ -15,7 +15,7 @@ import { parseHinglishExpense } from './lib/parsers/hinglishParser';
 import { categorizeTransaction } from './lib/categorizer/hybridCategorizer';
 import { generateMonthlyReview } from './lib/monthlyReport/reportGenerator';
 import { Transaction } from './lib/types';
-import { Github, Database, ShieldCheck, Cpu } from 'lucide-react';
+import { Github } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -27,11 +27,9 @@ export default function App() {
   const [goals, setGoals] = useState(() => dataStore.getGoals());
   const [lifeEvents, setLifeEvents] = useState(() => dataStore.getLifeEvents());
 
-  // Count pending reviews for the 2-minute review badge
   const pendingReviewsCount = transactions.filter(t => t.reviewNeeded || !t.isReviewed).length;
   const hasLifeEvent = lifeEvents.some(e => e.status === 'PENDING_CONFIRMATION');
 
-  // Aggregate category spends for simulation & reports
   const categorySpends: Record<string, number> = {};
   for (const t of transactions) {
     if (t.type === 'debit') {
@@ -127,29 +125,25 @@ export default function App() {
     setLifeEvents([...dataStore.getLifeEvents()]);
   };
 
-  // Categorize & Create Rule
   const handleCategorize = (txId: string, category: string, createRule: boolean) => {
     dataStore.updateTransactionCategory(txId, category, createRule);
     setTransactions([...dataStore.getTransactions()]);
     setRules([...dataStore.getScopedRules()]);
   };
 
-  // Life Event Resolution
   const handleResolveLifeEvent = (eventId: string, accept: boolean) => {
     dataStore.resolveLifeEvent(eventId, accept);
     setProfile({ ...dataStore.getProfile() });
     setLifeEvents([...dataStore.getLifeEvents()]);
   };
 
-  // Subscription Usage Confirmation
   const handleConfirmUsage = (subId: string, stillUsing: boolean) => {
     dataStore.confirmSubscriptionUsage(subId, stillUsing);
     setSubscriptions([...dataStore.getSubscriptions()]);
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col">
-      {/* Header with Navigation */}
+    <div className="min-h-screen bg-[#0b0f17] flex flex-col text-slate-200">
       <Header
         safeToSpendDaily={profile.safeToSpendDaily || 1616}
         runwayDays={profile.runwayDays || 40}
@@ -159,14 +153,12 @@ export default function App() {
         hasLifeEvent={hasLifeEvent}
       />
 
-      {/* Autonomous Life-Event Shift Banner */}
       <LivingModelBanner
         events={lifeEvents}
         onResolve={handleResolveLifeEvent}
       />
 
-      {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6">
         {activeTab === 'dashboard' && (
           <DashboardTab
             profile={profile}
@@ -219,33 +211,18 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800 bg-slate-900/60 py-6 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <div className="flex items-center space-x-2">
-            <span className="font-bold text-white">ArthaMind 🧠</span>
-            <span>•</span>
-            <span>Living Money Model & Deterministic Coach</span>
-            <span>•</span>
-            <span className="text-emerald-400">Agentic AI Hackathon 2026</span>
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <a 
-              href="https://github.com/Argho009/arthamind" 
-              target="_blank" 
-              rel="noreferrer" 
-              className="flex items-center space-x-1.5 hover:text-white transition-colors"
-            >
-              <Github className="w-4 h-4" />
-              <span>Argho009/arthamind</span>
-            </a>
-            <span>•</span>
-            <span className="text-orange-400 flex items-center space-x-1">
-              <Database className="w-3.5 h-3.5" />
-              <span>Cloudflare D1 Ready</span>
-            </span>
-          </div>
+      <footer className="border-t border-slate-800/60 bg-[#0b0f17] py-4 mt-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between text-xs text-slate-500">
+          <div>ArthaMind • Personal Finance</div>
+          <a 
+            href="https://github.com/Argho009/arthamind" 
+            target="_blank" 
+            rel="noreferrer" 
+            className="flex items-center space-x-1.5 text-slate-400 hover:text-slate-300 transition-colors font-mono"
+          >
+            <Github className="w-3.5 h-3.5" />
+            <span>Argho009/arthamind</span>
+          </a>
         </div>
       </footer>
     </div>

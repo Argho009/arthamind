@@ -1,8 +1,4 @@
 import React from 'react';
-import { 
-  CreditCard, AlertTriangle, Check, X, Bell, 
-  Calendar, Layers, ShieldCheck, Sparkles 
-} from 'lucide-react';
 import { Subscription, SinkingFund } from '../../lib/types';
 
 interface SubscriptionsTabProps {
@@ -18,87 +14,64 @@ export const SubscriptionsTab: React.FC<SubscriptionsTabProps> = ({
 }) => {
   return (
     <div className="space-y-6">
-      {/* Editorial Reality Note */}
-      <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-xs text-slate-300">
-        <span className="font-bold text-amber-400">Research & Innovation Note: </span>
-        Bank statement data alone cannot determine if a user opened or used an app. ArthaMind solves this with 
-        <strong> renewal proximity alerts</strong> (a 1-tap *"Still using this?"* nudge before auto-debit) combined with 
-        <strong> price-hike anomaly detection</strong>.
-      </div>
-
-      {/* Subscriptions Grid */}
-      <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-lg">
+      {/* Subscriptions */}
+      <div className="p-5 rounded-xl bg-slate-900/60 border border-slate-800">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-base font-bold text-white">Active Recurring Subscriptions</h3>
-            <p className="text-xs text-slate-400">Track price jumps and upcoming auto-debits</p>
+            <h2 className="text-sm font-semibold text-slate-200">Recurring subscriptions</h2>
+            <p className="text-xs text-slate-400 mt-0.5">Upcoming auto-debits and price adjustments.</p>
           </div>
-          <span className="text-xs text-slate-400">{subscriptions.length} Tracked</span>
+          <span className="text-xs text-slate-500 font-mono">{subscriptions.length} active</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
           {subscriptions.map((sub) => (
             <div 
               key={sub.id} 
-              className={`p-4 rounded-xl bg-slate-850 border ${
-                sub.priceChangeDetected 
-                  ? 'border-amber-500/50 shadow-md shadow-amber-500/5' 
-                  : 'border-slate-800'
-              }`}
+              className="p-3.5 rounded-lg bg-slate-850/50 border border-slate-800 flex flex-col justify-between"
             >
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-bold text-white">{sub.name}</span>
-                <span className="text-xs font-extrabold text-white">
-                  ₹{sub.amount.toLocaleString('en-IN')}/{sub.billingFrequency === 'monthly' ? 'mo' : 'yr'}
-                </span>
-              </div>
-
-              {sub.priceChangeDetected && (
-                <div className="mt-2.5 p-2 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center space-x-2">
-                  <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />
-                  <span className="text-[11px] text-amber-300 font-medium">
-                    Price jumped from ₹{sub.previousAmount} to ₹{sub.amount} (+₹{(sub.amount - (sub.previousAmount || 0))})!
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-slate-200">{sub.name}</span>
+                  <span className="font-mono font-medium text-slate-200">
+                    ₹{sub.amount.toLocaleString('en-IN')}/mo
                   </span>
                 </div>
-              )}
 
-              <div className="mt-3 text-xs text-slate-400 space-y-1">
-                <div className="flex justify-between">
-                  <span>Next Renewal:</span>
-                  <span className="text-slate-200 font-medium">{sub.nextRenewalDate}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Last Charged:</span>
-                  <span className="text-slate-400">{sub.lastChargedDate}</span>
+                {sub.priceChangeDetected && (
+                  <div className="mt-2 text-[11px] text-amber-400">
+                    Price increased from ₹{sub.previousAmount} (+₹{(sub.amount - (sub.previousAmount || 0))})
+                  </div>
+                )}
+
+                <div className="mt-2 text-[11px] text-slate-500 font-mono">
+                  Renews: {sub.nextRenewalDate}
                 </div>
               </div>
 
-              {/* One-Tap "Still Using This?" Nudge */}
-              <div className="mt-4 pt-3 border-t border-slate-800/80">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] text-slate-400">Still actively using?</span>
-                  <div className="flex items-center space-x-1">
-                    <button
-                      onClick={() => onConfirmUsage(sub.id, true)}
-                      className={`px-2 py-1 rounded text-[10px] font-bold transition-all ${
-                        sub.userUsageConfirmed 
-                          ? 'bg-emerald-500 text-slate-950' 
-                          : 'bg-slate-800 text-slate-400 hover:text-white'
-                      }`}
-                    >
-                      Yes
-                    </button>
-                    <button
-                      onClick={() => onConfirmUsage(sub.id, false)}
-                      className={`px-2 py-1 rounded text-[10px] font-bold transition-all ${
-                        !sub.userUsageConfirmed 
-                          ? 'bg-rose-500 text-white' 
-                          : 'bg-slate-800 text-slate-400 hover:text-white'
-                      }`}
-                    >
-                      No / Cancel
-                    </button>
-                  </div>
+              <div className="mt-3 pt-2.5 border-t border-slate-800/60 flex items-center justify-between">
+                <span className="text-[10px] text-slate-400">Keep active?</span>
+                <div className="flex items-center space-x-1">
+                  <button
+                    onClick={() => onConfirmUsage(sub.id, true)}
+                    className={`px-2 py-0.5 rounded text-[10px] transition-colors ${
+                      sub.userUsageConfirmed 
+                        ? 'bg-slate-700 text-white font-medium' 
+                        : 'text-slate-500 hover:text-slate-300'
+                    }`}
+                  >
+                    Keep
+                  </button>
+                  <button
+                    onClick={() => onConfirmUsage(sub.id, false)}
+                    className={`px-2 py-0.5 rounded text-[10px] transition-colors ${
+                      !sub.userUsageConfirmed 
+                        ? 'bg-slate-700 text-white font-medium' 
+                        : 'text-slate-500 hover:text-slate-300'
+                    }`}
+                  >
+                    Cancel
+                  </button>
                 </div>
               </div>
             </div>
@@ -106,42 +79,37 @@ export const SubscriptionsTab: React.FC<SubscriptionsTabProps> = ({
         </div>
       </div>
 
-      {/* Auto Sinking Funds (Lumpy Expense Protection) */}
-      <div className="bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-lg">
+      {/* Sinking Funds */}
+      <div className="p-5 rounded-xl bg-slate-900/60 border border-slate-800">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-base font-bold text-white">Auto Sinking Funds (Lumpy & Seasonal Costs)</h3>
-            <p className="text-xs text-slate-400">Spreads annual spikes (Diwali, car insurance, school fees) into monthly reserves.</p>
+            <h2 className="text-sm font-semibold text-slate-200">Sinking funds (Periodic expenses)</h2>
+            <p className="text-xs text-slate-400 mt-0.5">Spreads annual and seasonal costs into monthly reserves.</p>
           </div>
-          <span className="text-xs px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">
-            Proactive Protection
-          </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           {sinkingFunds.map((fund) => {
             const pct = Math.min(100, Math.round((fund.currentSaved / fund.targetAmount) * 100));
             return (
-              <div key={fund.id} className="p-4 rounded-xl bg-slate-850 border border-slate-800">
+              <div key={fund.id} className="p-3.5 rounded-lg bg-slate-850/50 border border-slate-800">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-bold text-white">{fund.name}</span>
-                  <span className="text-xs font-semibold text-teal-400">
-                    Due in Month {fund.dueMonth}
-                  </span>
+                  <span className="font-medium text-slate-200">{fund.name}</span>
+                  <span className="text-slate-400 text-[11px]">Due month {fund.dueMonth}</span>
                 </div>
 
-                <div className="flex justify-between text-xs text-slate-400 mt-2">
-                  <span>Saved: <strong className="text-white">₹{fund.currentSaved.toLocaleString('en-IN')}</strong></span>
-                  <span>Target: <strong className="text-slate-300">₹{fund.targetAmount.toLocaleString('en-IN')}</strong></span>
+                <div className="flex justify-between text-[11px] text-slate-400 mt-2 font-mono">
+                  <span>Saved: ₹{fund.currentSaved.toLocaleString('en-IN')}</span>
+                  <span>Target: ₹{fund.targetAmount.toLocaleString('en-IN')}</span>
                 </div>
 
-                <div className="w-full bg-slate-800 rounded-full h-2 mt-2">
-                  <div className="bg-teal-500 h-2 rounded-full" style={{ width: `${pct}%` }} />
+                <div className="w-full bg-slate-800 rounded-full h-1.5 mt-2">
+                  <div className="bg-slate-400 h-1.5 rounded-full" style={{ width: `${pct}%` }} />
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-slate-800 flex items-center justify-between text-xs">
-                  <span className="text-slate-400">Monthly Reserve:</span>
-                  <span className="font-bold text-emerald-400">₹{fund.monthlyAllocation.toLocaleString('en-IN')}/mo</span>
+                <div className="mt-2.5 pt-2 border-t border-slate-800/60 flex items-center justify-between text-[11px]">
+                  <span className="text-slate-500">Monthly reserve</span>
+                  <span className="font-mono text-slate-300">₹{fund.monthlyAllocation.toLocaleString('en-IN')}/mo</span>
                 </div>
               </div>
             );
